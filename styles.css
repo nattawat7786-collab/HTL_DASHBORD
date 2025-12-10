@@ -218,7 +218,14 @@ body {
     justify-content: space-between;
     align-items: center;
 }
-
+.block-output-trend {
+    background: #2A2A2A;
+    border-left: 4px solid #00BFFF;
+}
+.block-cycle-trend {
+    background: #2A2A2A;
+    border-left: 4px solid #FF00FF;
+}
 .footer-left {
     display: flex;
     gap: 24px;
