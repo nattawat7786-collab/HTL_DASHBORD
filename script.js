@@ -118,3 +118,58 @@ new Chart(ctx3, {
         }
     }
 });
+// กราฟที่ 4: Cycle Time Trend
+const ctx4 = document.getElementById('cycleTrendChart').getContext('2d');
+new Chart(ctx4, {
+    type: 'line',
+    data: {
+        labels: ['08:00', '09:00', '10:00', '11:00', '12:00'],
+        datasets: [
+            {
+                label: 'Actual Cycle Time (sec)',
+                data: [78, 80, 85, 90, 88],
+                borderColor: '#FF00FF',
+                backgroundColor: 'transparent',
+                tension: 0.4
+            },
+            {
+                label: 'Standard Cycle Time',
+                data: [75, 75, 75, 75, 75],
+                borderColor: '#FFFF00',
+                borderDash: [5, 5],
+                backgroundColor: 'transparent',
+                tension: 0.4
+            }
+        ]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                labels: {
+                    color: '#B0B0B0',
+                    font: { size: 14 }
+                }
+            }
+        },
+        scales: {
+            x: {
+                ticks: {
+                    color: '#B0B0B0',
+                    font: { size: 14 }
+                },
+                grid: { color: '#3A3A3A' }
+            },
+            y: {
+                beginAtZero: false,
+                ticks: {
+                    color: '#B0B0B0',
+                    font: { size: 14 }
+                },
+                grid: { color: '#3A3A3A' }
+            }
+        }
+    }
+});
+
