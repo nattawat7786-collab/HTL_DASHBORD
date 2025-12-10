@@ -3,11 +3,11 @@ const ctx1 = document.getElementById('downTimeChart').getContext('2d');
 new Chart(ctx1, {
     type: 'bar',
     data: {
-        labels: ['STN10', 'STN20', 'STN30', 'STN40', 'STN50', 'STN60', 'STN70', 'STN80'],
+        labels: ['STN10', 'STN20', 'STN30', 'STN40', 'STN50'],
         datasets: [{
             label: 'Down Time (min)',
-            data: [45, 40, 35, 30, 25, 20, 15, 10],
-            backgroundColor: ['#FF3333', '#FF4444', '#FF6666', '#FF8888', '#FF9999', '#FFAAAA', '#FFCCCC', '#FFDDDD'],
+            data: [45, 40, 35, 30, 25],
+            backgroundColor: ['#FF3333', '#FF5555', '#FF7777', '#FF9999', '#FFBBBB'],
             borderRadius: 2,
             borderSkipped: false
         }]
@@ -21,11 +21,11 @@ new Chart(ctx1, {
             x: { 
                 beginAtZero: true, 
                 max: 50, 
-                ticks: { color: '#B0B0B0' }, 
+                ticks: { color: '#B0B0B0', font: { size: 16 } }, 
                 grid: { color: '#3A3A3A' } 
             }, 
             y: { 
-                ticks: { color: '#B0B0B0' }, 
+                ticks: { color: '#B0B0B0', font: { size: 16 } }, 
                 grid: { color: '#3A3A3A' } 
             } 
         }
@@ -37,11 +37,11 @@ const ctx2 = document.getElementById('stationChart').getContext('2d');
 new Chart(ctx2, {
     type: 'bar',
     data: {
-        labels: ['STN10', 'STN20', 'STN30', 'STN40', 'STN50', 'STN60', 'STN70', 'STN80'],
+        labels: ['STN10', 'STN20', 'STN30', 'STN40', 'STN50'],
         datasets: [{
             label: 'Number of Stops',
-            data: [8, 7, 6, 5, 4, 3, 2, 1],
-            backgroundColor: ['#FFA500', '#FFB84D', '#FFC266', '#FFCC80', '#FFD699', '#FFE0B3', '#FFECCC', '#FFF5E6'],
+            data: [8, 7, 6, 5, 4],
+            backgroundColor: ['#FFA500', '#FFB84D', '#FFC266', '#FFD699', '#FFE0B3'],
             borderRadius: 2,
             borderSkipped: false
         }]
@@ -52,13 +52,13 @@ new Chart(ctx2, {
         plugins: { legend: { display: false } },
         scales: { 
             x: { 
-                ticks: { color: '#B0B0B0' }, 
+                ticks: { color: '#B0B0B0', font: { size: 16 } }, 
                 grid: { color: '#3A3A3A' } 
             }, 
             y: { 
                 beginAtZero: true, 
                 max: 10, 
-                ticks: { color: '#B0B0B0' }, 
+                ticks: { color: '#B0B0B0', font: { size: 16 } }, 
                 grid: { color: '#3A3A3A' } 
             } 
         }
