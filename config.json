@@ -1,0 +1,19 @@
+{
+  "plc": {
+    "endpointUrl": "opc.tcp://192.168.1.100:4840",
+    "securityMode": "None",
+    "securityPolicy": "None"
+  },
+  "tags": {
+    "dailyPlan": "ns=2;s=DM0",
+    "actual": "ns=2;s=DM1",
+    "lineStop": "ns=2;s=DM2",
+    "lineOperation": "ns=2;s=DM3",
+    "efficiency": "ns=2;s=DM4",
+    "cycleTime": "ns=2;s=DM5",
+    "status": "ns=2;s=DM6"
+  },
+  "polling": {
+    "interval": 1000
+  }
+}

@@ -1,6 +1,131 @@
-// กราฟที่ 1: Top 5 Down Time Section - แนวนอน
+// ===== WebSocket Connection =====
+let ws;
+let reconnectInterval;
+let connectionStatus = 'disconnected';
+
+function connectWebSocket() {
+    // สร้าง WebSocket Connection
+    const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+    const wsUrl = `${protocol}//${window.location.host}`;
+    
+    ws = new WebSocket(wsUrl);
+    
+    ws.onopen = () => {
+        console.log('✅ Connected to server');
+        connectionStatus = 'connected';
+        updateConnectionStatus();
+        clearInterval(reconnectInterval);
+    };
+    
+    ws.onmessage = (event) => {
+        try {
+            const data = JSON.parse(event.data);
+            updateDashboard(data);
+        } catch (err) {
+            console.error('❌ Error parsing data:', err);
+        }
+    };
+    
+    ws.onerror = (error) => {
+        console.error('❌ WebSocket error:', error);
+        connectionStatus = 'error';
+        updateConnectionStatus();
+    };
+    
+    ws.onclose = () => {
+        console.log('📴 Disconnected from server');
+        connectionStatus = 'disconnected';
+        updateConnectionStatus();
+        
+        // Auto reconnect ทุก 3 วินาที
+        reconnectInterval = setInterval(() => {
+            console.log('🔄 Reconnecting...');
+            connectWebSocket();
+        }, 3000);
+    };
+}
+
+// ===== Update Connection Status Indicator =====
+function updateConnectionStatus() {
+    const statusElement = document.querySelector('.header-time');
+    if (!statusElement) return;
+    
+    const now = new Date();
+    const timeString = now.toLocaleString('en-GB', {
+        weekday: 'short',
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+    });
+    
+    let statusIcon = '';
+    if (connectionStatus === 'connected') {
+        statusIcon = '🟢';
+    } else if (connectionStatus === 'error') {
+        statusIcon = '🔴';
+    } else {
+        statusIcon = '🟡';
+    }
+    
+    statusElement.textContent = `${statusIcon} ${timeString}`;
+}
+
+// ===== Update Dashboard with Real-time Data =====
+function updateDashboard(data) {
+    console.log('📊 Updating dashboard:', data);
+    
+    // อัพเดท block values
+    updateBlockValue('.block-daily-plan .block-value', data.dailyPlan);
+    updateBlockValue('.block-actual .block-value', data.actual);
+    updateBlockValue('.block-line-stop .block-value', data.lineStop);
+    updateBlockValue('.block-Line-Oparation .block-value', data.lineOperation);
+    updateBlockValue('.block-CYCLE-Time .block-value', data.cycleTime);
+    updateBlockValue('.efficiency-large', data.efficiency + '%');
+    updateBlockValue('.block-Status-large', data.status);
+    
+    // อัพเดทสี Status
+    updateStatusColor(data.status);
+    
+    // อัพเดทเวลา
+    updateConnectionStatus();
+}
+
+// ===== Update Single Block Value =====
+function updateBlockValue(selector, value) {
+    const element = document.querySelector(selector);
+    if (element) {
+        // เพิ่ม animation effect
+        element.style.opacity = '0.5';
+        setTimeout(() => {
+            element.textContent = value;
+            element.style.opacity = '1';
+        }, 100);
+    }
+}
+
+// ===== Update Status Color =====
+function updateStatusColor(status) {
+    const statusElement = document.querySelector('.block-Status-large');
+    const statusBlock = document.querySelector('.block-Status');
+    
+    if (statusElement && statusBlock) {
+        if (status === 'Run') {
+            statusElement.style.color = '#00FF00';
+            statusBlock.style.background = '#1A4A2A';
+            statusBlock.style.borderLeft = '4px solid #00FF00';
+        } else {
+            statusElement.style.color = '#FF3333';
+            statusBlock.style.background = '#5A1A1A';
+            statusBlock.style.borderLeft = '4px solid #FF3333';
+        }
+    }
+}
+
+// ===== Initialize Charts (เหมือนเดิม) =====
 const ctx1 = document.getElementById('downTimeChart').getContext('2d');
-new Chart(ctx1, {
+const downTimeChart = new Chart(ctx1, {
     type: 'bar',
     data: {
         labels: ['STN10', 'STN20', 'STN30', 'STN40', 'STN50'],
@@ -32,9 +157,8 @@ new Chart(ctx1, {
     }
 });
 
-// กราฟที่ 2: Top 5 Down Time Station - แนวตั้ง
 const ctx2 = document.getElementById('stationChart').getContext('2d');
-new Chart(ctx2, {
+const stationChart = new Chart(ctx2, {
     type: 'bar',
     data: {
         labels: ['STN10', 'STN20', 'STN30', 'STN40', 'STN50'],
@@ -64,9 +188,9 @@ new Chart(ctx2, {
         }
     }
 });
-// กราฟที่ 3: Hourly Output Trend
+
 const ctx3 = document.getElementById('outputTrendChart').getContext('2d');
-new Chart(ctx3, {
+const outputChart = new Chart(ctx3, {
     type: 'line',
     data: {
         labels: ['08:00', '09:00', '10:00', '11:00', '12:00'],
@@ -118,9 +242,9 @@ new Chart(ctx3, {
         }
     }
 });
-// กราฟที่ 4: Cycle Time Trend
+
 const ctx4 = document.getElementById('cycleTrendChart').getContext('2d');
-new Chart(ctx4, {
+const cycleChart = new Chart(ctx4, {
     type: 'line',
     data: {
         labels: ['08:00', '09:00', '10:00', '11:00', '12:00'],
@@ -173,3 +297,10 @@ new Chart(ctx4, {
     }
 });
 
+// ===== Start Application =====
+console.log('🚀 Starting HTL Dashboard...');
+connectWebSocket();
+updateConnectionStatus();
+
+// อัพเดทเวลาทุกนาที
+setInterval(updateConnectionStatus, 60000);

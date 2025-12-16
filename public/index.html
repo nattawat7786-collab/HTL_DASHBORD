@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTL Dashboard - Design Version 1 (Dark)</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1"></script>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="header">
+            <div class="header-left">
+                <span class="header-title" style="color: #FFFFFF;">🏭 HTL Dashboard</span>
+            </div>
+            <div class="nav-menu">
+                <a class="nav-item" href="#">Dashboard Overview</a>
+                <a class="nav-item" href="#">Cycle Time Monitoring</a>
+                <a class="nav-item" href="#">Active Alarms</a>
+                <a class="nav-item" href="#">Operation Status</a>
+                <a class="nav-item" href="#">Settings</a>
+            </div>
+            <div class="header-time">Mon. 28/2023 | 10:00</div>
+        </div>
+
+        <div class="content">
+            <div style="padding-bottom: 8px;">
+                <h1 style="font-size: 28px; font-weight: 700; color: #FFFFFF; margin: 0;">ST1 Door Line</h1>
+            </div>
+
+            <div class="row">
+                <div class="data-block block-daily-plan">
+                    <div class="block-label">Daily Plan</div>
+                    <div class="block-value">250</div>
+                    <div class="block-unit">UNITS</div>
+                </div>
+                <div class="data-block block-actual">
+                    <div class="block-label">Actual</div>
+                    <div class="block-value">20</div>
+                    <div class="block-unit">UNITS</div>
+                </div>
+                <div class="data-block block-line-stop">
+                    <div class="block-label">Line Stop</div>
+                    <div class="block-value">17</div>
+                    <div class="block-unit">MINUTE</div>
+                </div>
+                <div class="data-block block-Line-Oparation">
+                    <div class="block-label">Line Oparation</div>
+                    <div class="block-value">115</div>
+                    <div class="block-unit">MINUTE</div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="data-block block-monthly-plan">
+                    <div class="block-label">Model</div>
+                    <div class="block-value">J03M RD_LH</div>
+                </div>
+                    <div class="data-block block-efficiency">
+                    <div class="block-label">Efficiency</div>
+                    <div class="efficiency-large">98%</div>
+                </div>
+                
+                <div class="data-block block-Status">
+                    <div class="block-label">Status</div>
+                    <div class="block-Status-large">Run</div>
+                </div>
+                <div class="data-block block-CYCLE-Time">
+                    <div class="block-label">CYCLE Time</div>
+                    <div class="block-value">77.8</div>
+                    <div class="block-unit">Second</div>
+                </div>
+            </div>
+
+            <div class="row">
+                
+                <div class="data-block block-chart">
+                    <div class="block-label">Top 5 Down Time Section</div>
+                    <div class="chart-container">
+                        <canvas id="downTimeChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="data-block block-station">
+                    <div class="block-label">Top 5 Down Time Station</div>
+                    <div class="chart-container">
+                        <canvas id="stationChart"></canvas>
+                    </div>
+                </div>
+                <div class="data-block block-output-trend">
+                    <div class="block-label">Hourly Output Trend</div>
+                    <div class="chart-container">
+                        <canvas id="outputTrendChart"></canvas>
+                    </div>
+                </div>
+                <div class="data-block block-cycle-trend">
+                    <div class="block-label">Cycle Time Trend</div>
+                    <div class="chart-container">
+                        <canvas id="cycleTrendChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <div class="footer-left">
+                <span>Privacy Policy</span>
+                <span>Terms of Service</span>
+                <span>Help Center</span>
+            </div>
+            <div style="text-align: right;">
+                © 2025 HTL Dashboard.
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
